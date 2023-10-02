@@ -1,17 +1,19 @@
-import { exports } from '../algorithm';
+import { getChartData } from '../algorithm';
 import './Chart.css';
 
 function App() {
+  const { xAxis, yAxis } = getChartData();
+
   return (
     <div className="App">
-      {exports.xAxis.map((result, index) => (
+      {xAxis.map((result, index) => (
         <div key={index}>{result}</div>
       ))}
       ==============================================
       <br />
       ==============================================
       <br />
-      {exports.yAxis.map((result, index) => (
+      {yAxis.map((result, index) => (
         <div key={index}>{result}</div>
       ))}
     </div>

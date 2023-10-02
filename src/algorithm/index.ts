@@ -76,7 +76,7 @@ function methodKantorovich(
   return I;
 }
 
-export const exports = {
+export const getChartData = () => ({
   xAxis: [1, 2, 3],
   yAxis: [1, 2, 3].map((x) => methodKantorovich(func, 0, x, eps)),
-};
+});
