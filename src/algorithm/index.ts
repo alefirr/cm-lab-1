@@ -79,7 +79,7 @@ function kantorovichMethod(
     }
   }
 
-  return I;
+  return +I.toFixed(4);
 }
 
 const xAsisPoints = generatePoints(

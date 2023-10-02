@@ -11,7 +11,8 @@ export const generatePoints = (start: number, end: number, count: number) => {
   const result = [];
 
   for (let i = 0; i < count; i++) {
-    result.push(start + i * step);
+    let x = start + i * step;
+    result.push(+x.toFixed(4));
   }
   return result;
 };
