@@ -1,7 +1,6 @@
-// import { integral, evaluate } from 'mathjs';
 import math from 'mathjs';
 
-const { exp } = math;
+math.import(require('mathjs-simple-integral'));
 
 declare module 'mathjs' {
   interface MathJsStatic {
@@ -10,13 +9,11 @@ declare module 'mathjs' {
   }
 }
 
-math.import(require('mathjs-simple-integral'));
-
 const eps = 0.05;
 let n = 20;
 
 export const func = (x: number) => {
-  return exp(x) / Math.sqrt(x);
+  return math.exp(x) / Math.sqrt(x);
 };
 
 function simpsonMethod(
@@ -47,7 +44,7 @@ function methodKantorovich(
 ): number {
   let psi = (x: number) => {
     return (
-      exp(x) -
+      math.exp(x) -
       1 -
       x -
       Math.pow(x, 2) / 2 -
