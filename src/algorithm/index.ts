@@ -1,4 +1,7 @@
-import math, { exp } from 'mathjs';
+// import { integral, evaluate } from 'mathjs';
+import math from 'mathjs';
+
+const { exp } = math;
 
 declare module 'mathjs' {
   interface MathJsStatic {
@@ -9,7 +12,6 @@ declare module 'mathjs' {
 
 math.import(require('mathjs-simple-integral'));
 
-const [a, b] = [0, 5];
 const eps = 0.05;
 let n = 20;
 
@@ -77,4 +79,7 @@ function methodKantorovich(
   return I;
 }
 
-console.log(methodKantorovich(func, a, b, eps));
+export const exports = {
+  xAxis: [1, 2, 3],
+  yAxis: [1, 2, 3].map((x) => methodKantorovich(func, 0, x, eps)),
+};
