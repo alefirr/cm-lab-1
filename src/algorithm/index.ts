@@ -1,14 +1,14 @@
 import math from 'mathjs';
 import { generatePoints } from './generatePoints';
 
-math.import(require('mathjs-simple-integral'));
-
 declare module 'mathjs' {
   interface MathJsStatic {
     integral: (expr: string, variable: string, options?: any) => string;
     eval: (expr: string, scope?: any) => number;
   }
 }
+
+math.import(require('mathjs-simple-integral'));
 
 const CONFIG = {
   EPS: 0.05,
@@ -38,7 +38,7 @@ function simpsonMethod(
   return (h / 3) * sum;
 }
 
-function methodKantorovich(
+function kantorovichMethod(
   funcString: string,
   a: number,
   b: number,
@@ -81,6 +81,6 @@ const xAsisPoints = generatePoints(0, 10, 100);
 export const getChartData = () => ({
   xAxis: xAsisPoints,
   yAxis: xAsisPoints.map((x) =>
-    methodKantorovich(CONFIG.FUNCTION, 0, x, CONFIG.EPS, CONFIG.KANTOROVICH_N)
+    kantorovichMethod(CONFIG.FUNCTION, 0, x, CONFIG.EPS, CONFIG.KANTOROVICH_N)
   ),
 });
