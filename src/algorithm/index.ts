@@ -1,4 +1,5 @@
 import math from 'mathjs';
+import { generatePoints } from './generatePoints';
 
 math.import(require('mathjs-simple-integral'));
 
@@ -76,7 +77,9 @@ function methodKantorovich(
   return I;
 }
 
+const xAsisPoints = generatePoints(0, 10, 100);
+
 export const getChartData = () => ({
-  xAxis: [1, 2, 3],
-  yAxis: [1, 2, 3].map((x) => methodKantorovich(func, 0, x, eps)),
+  xAxis: xAsisPoints,
+  yAxis: xAsisPoints.map((x) => methodKantorovich(func, 0, x, eps)),
 });
