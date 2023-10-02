@@ -10,23 +10,29 @@ declare module 'mathjs' {
 
 math.import(require('mathjs-simple-integral'));
 
-const CONFIG = {
+export const CONFIG = {
   EPS: 0.05,
-  SIMPSON_N: 20,
-  KANTOROVICH_N: 20,
+  N: 20,
+
   FUNCTION:
     '1/Math.sqrt(x) + Math.sqrt(x) + 1/2 * Math.pow(x, 3/2) + 1/6 * Math.pow(x, 5/2) + 1/24 * Math.pow(x, 7/2)',
+  X_INTERVAL_START: 0,
+  X_INTERVAL_END: 10,
+
+  Y_DISPAY_START: -5,
+  Y_DISPAY_END: 200,
 };
 
 function simpsonMethod(
   func: (x: number) => number,
   a: number,
-  b: number
+  b: number,
+  n: number
 ): number {
-  const h = (b - a) / CONFIG.SIMPSON_N;
+  const h = (b - a) / n;
   let limit_a = 0;
   let sum = limit_a + func(b);
-  for (let i = 1; i < CONFIG.SIMPSON_N; i++) {
+  for (let i = 1; i < n; i++) {
     const x = a + i * h;
     if (i % 2 === 0) {
       sum += 2 * func(x);
@@ -43,7 +49,7 @@ function kantorovichMethod(
   a: number,
   b: number,
   eps: number,
-  n = 5
+  n: number
 ): number {
   const psi = (x: number) => {
     return (
@@ -60,12 +66,12 @@ function kantorovichMethod(
 
   let I1 = math.eval(I1_integral, { x: b }) - math.eval(I1_integral, { x: a });
 
-  let I2 = simpsonMethod((x: number) => psi(x) / Math.sqrt(x), a, b);
+  let I2 = simpsonMethod((x: number) => psi(x) / Math.sqrt(x), a, b, n);
   let I = I1 + I2;
 
   while (n < 1000) {
     n *= 2;
-    let newI2 = simpsonMethod((x: number) => psi(x) / Math.sqrt(x), a, b);
+    let newI2 = simpsonMethod((x: number) => psi(x) / Math.sqrt(x), a, b, n);
     let newI = I1 + newI2;
     if (Math.abs(newI - I) < eps) {
       I = newI;
@@ -76,11 +82,15 @@ function kantorovichMethod(
   return I;
 }
 
-const xAsisPoints = generatePoints(0, 10, 100);
+const xAsisPoints = generatePoints(
+  CONFIG.X_INTERVAL_START,
+  CONFIG.X_INTERVAL_END,
+  150
+);
 
 export const getChartData = () => ({
   xAxis: xAsisPoints,
   yAxis: xAsisPoints.map((x) =>
-    kantorovichMethod(CONFIG.FUNCTION, 0, x, CONFIG.EPS, CONFIG.KANTOROVICH_N)
+    kantorovichMethod(CONFIG.FUNCTION, 0, x, CONFIG.EPS, CONFIG.N)
   ),
 });
