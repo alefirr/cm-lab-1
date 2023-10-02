@@ -1,5 +1,5 @@
-import './App.css';
-import { exports } from './algorithm';
+import { exports } from '../algorithm';
+import './Chart.css';
 
 function App() {
   return (
