@@ -1,4 +1,4 @@
-# CM-lab-1
+# cm-lab-1
 
 Lab #1 for Computer Modelling course.
 
